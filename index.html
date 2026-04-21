@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Sculpt & Définition</title>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=DM+Sans:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg: #080808; --surface: #0f0f0f; --border: #1a1a1a;
+            --accent: #C8F45A; --accent2: #F45A8C; --accent3: #5AC8F4;
+            --text: #f0ede6; --muted: #555;
+        }
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body { 
+            background: var(--bg); color: var(--text); 
+            font-family: 'DM Sans', sans-serif; line-height: 1.5;
+            padding-bottom: 50px;
+        }
+        .hero {
+            padding: 36px 24px 28px; border-bottom: 1px solid var(--border);
+            background: linear-gradient(180deg, #0f0f0f 0%, #080808 100%);
+            position: sticky; top: 0; z-index: 20;
+        }
+        .hero-inner { max-width: 680px; margin: 0 auto; }
+        h1 {
+            font-family: 'Playfair Display', serif; font-size: 26px; font-weight: 900;
+            background: linear-gradient(135deg, var(--accent) 0%, var(--accent3) 100%);
+            -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+        }
+        .tabs { display: flex; gap: 6px; margin-top: 20px; overflow-x: auto; }
+        .tab-btn {
+            padding: 8px 16px; border-radius: 20px; border: 1px solid #222;
+            background: transparent; color: var(--muted); font-weight: 600;
+            font-size: 12px; cursor: pointer; white-space: nowrap;
+        }
+        .tab-btn.active { background: var(--accent); color: #080808; border: none; }
+        
+        .panel { display: none; max-width: 680px; margin: 0 auto; padding: 24px 20px; }
+        .panel.active { display: block; }
+
+        /* Sessions */
+        .grid-sessions { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 10px; margin-bottom: 20px; }
+        .sess-card {
+            background: var(--surface); border: 1px solid var(--border);
+            padding: 16px 10px; border-radius: 14px; text-align: center; cursor: pointer;
+        }
+        .sess-card.active { border: 1.5px solid var(--accent); background: rgba(200, 244, 90, 0.1); }
+
+        .ex-card {
+            background: var(--surface); border: 1px solid #181818;
+            border-radius: 12px; margin-bottom: 8px; padding: 14px 16px; cursor: pointer;
+        }
+        .ex-tag {
+            font-size: 9px; padding: 2px 7px; border-radius: 8px;
+            text-transform: uppercase; margin-left: 8px; font-weight: bold;
+        }
+        .details { display: none; margin-top: 15px; padding-top: 15px; border-top: 1px solid rgba(255,255,255,0.05); }
+        .details.open { display: block; }
+        
+        .tip-card {
+            background: var(--surface); border: 1px solid var(--border);
+            padding: 18px; border-radius: 14px; margin-bottom: 12px;
+        }
+        .roadmap-step {
+            display: flex; gap: 16px; padding: 18px; background: var(--surface);
+            border-radius: 14px; margin-bottom: 14px; border-left: 3px solid var(--accent);
+        }
+    </style>
+</head>
+<body>
+
+<div class="hero">
+    <div class="hero-inner">
+        <div style="display:flex; justify-content: space-between;">
+            <div>
+                <p style="font-size: 10px; letter-spacing: 3px; color: #444; text-transform: uppercase;">Programme personnalisé</p>
+                <h1>SCULPT & DÉFINITION</h1>
+            </div>
+            <div style="text-align: right; font-size: 11px;">
+                <p style="color: #555;">160cm · 64kg</p>
+                <p style="color: var(--accent2);">Objectif −10kg</p>
+            </div>
+        </div>
+        <div class="tabs">
+            <button class="tab-btn active" onclick="showTab('sessions', this)">Programme</button>
+            <button class="tab-btn" onclick="showTab('nutrition', this)">Nutrition</button>
+            <button class="tab-btn" onclick="showTab('plan', this)">Roadmap</button>
+        </div>
+    </div>
+</div>
+
+<div id="sessions" class="panel active">
+    <div class="grid-sessions">
+        <div class="sess-card active" onclick="selectSession(0, this)">
+            <div style="font-size:22px">🍑</div>
+            <div style="font-size:12px; font-weight:700">Séance A</div>
+            <div style="font-size:10px; color:var(--muted)">Lundi</div>
+        </div>
+        <div class="sess-card" onclick="selectSession(1, this)">
+            <div style="font-size:22px">🔥</div>
+            <div style="font-size:12px; font-weight:700">Séance B</div>
+            <div style="font-size:10px; color:var(--muted)">Mercredi</div>
+        </div>
+        <div class="sess-card" onclick="selectSession(2, this)">
+            <div style="font-size:22px">💪</div>
+            <div style="font-size:12px; font-weight:700">Séance C</div>
+            <div style="font-size:10px; color:var(--muted)">Vendredi</div>
+        </div>
+    </div>
+    <div id="exercise-list"></div>
+</div>
+
+<div id="nutrition" class="panel">
+    <div class="tip-card" style="border: 1.5px solid var(--accent2)">
+        <p style="font-size:9px; color:var(--accent2); font-weight:bold; margin-bottom:10px;">⚠ PRIORITÉ</p>
+        <p style="font-weight:bold; color:var(--accent2)">Caséine : mauvais timing</p>
+        <p style="font-size:12px; color:#aaa; margin-top:5px;">Prends-la AVANT DE DORMIR, pas juste après séance. Après l’effort, préfère la Whey Isolate.</p>
+    </div>
+    <div class="tip-card">
+        <p style="font-weight:bold; color:var(--accent)">Déficit calorique doux</p>
+        <p style="font-size:12px; color:#aaa; margin-top:5px;">Vise 1600-1700 kcal/jour pour perdre sans fatiguer le muscle.</p>
+    </div>
+</div>
+
+<div id="plan" class="panel">
+    <div class="roadmap-step">
+        <div><p style="font-weight:bold; color:var(--accent)">S1-S4 : Adaptation</p>
+        <p style="font-size:12px; color:#888">Maîtrise des formes, pas de charge excessive.</p></div>
+    </div>
+    <div class="roadmap-step" style="border-color: var(--accent3)">
+        <div><p style="font-weight:bold; color:var(--accent3)">S5-S8 : Progression</p>
+        <p style="font-size:12px; color:#888">+2.5kg sur les grands exercices.</p></div>
+    </div>
+</div>
+
+<script>
+    const data = [
+        {
+            theme: "Bas du corps — Fessiers",
+            warmup: "8 min vélo ou tapis incliné 7%",
+            exercises: [
+                { n: "Hip Thrust", v: "4×10 @ 82,5kg", tag: "🔑 Priorité", why: "Principal exercice fessiers. Contracte fort en haut.", cue: "Pousse avec les talons, menton rentré." },
+                { n: "Bulgarian Split Squat", v: "4×8 @ 12kg", tag: "✨ Nouveau", why: "Cible unilatérale efficace.", cue: "Pied avant loin, descend lentement." },
+                { n: "Press Leg", v: "4×10 @ 82,5kg", tag: "🔧 Ajusté", why: "Pieds haut sur plateforme.", cue: "Ne verrouille pas les genoux." }
+            ]
+        },
+        {
+            theme: "Full Body Fonctionnel",
+            warmup: "5 min corde à sauter",
+            exercises: [
+                { n: "Squat to Press", v: "4×12 @ 8kg", tag: "📈 Progression", why: "Brûle beaucoup de calories.", cue: "Explosif vers le haut." },
+                { n: "Dumbbell Swing", v: "4×15 @ 12kg", tag: "📈 Progression", why: "Cardio + Fessiers.", cue: "Hanches explosives." }
+            ]
+        },
+        {
+            theme: "Haut du corps",
+            warmup: "5 min vélo doux + rotations",
+            exercises: [
+                { n: "Lat Pulldown", v: "4×12 @ 27,5kg", tag: "📈 Progression", why: "Tonifie sans grossir.", cue: "Tire vers le menton." },
+                { n: "Lateral Raise", v: "3×15 @ 6kg", tag: "🔧 Ajusté", why: "Épaules rondes.", cue: "Pas de balancement." }
+            ]
+        }
+    ];
+
+    function renderExercises(idx) {
+        const container = document.getElementById('exercise-list');
+        const session = data[idx];
+        let html = `
+            <div style="background:#1a1a1a; padding:15px; border-radius:12px; margin-bottom:20px;">
+                <p style="font-size:10px; color:var(--accent); letter-spacing:2px;">${session.theme}</p>
+                <p style="font-size:12px; color:#888; margin-top:5px;">🔥 Échauffement: ${session.warmup}</p>
+            </div>
+        `;
+        
+        session.exercises.forEach((ex, i) => {
+            html += `
+                <div class="ex-card" onclick="this.querySelector('.details').classList.toggle('open')">
+                    <div style="display:flex; justify-content:space-between; align-items:center;">
+                        <div>
+                            <span style="font-weight:bold; font-size:14px;">${ex.n}</span>
+                            <span class="ex-tag" style="background:rgba(200,244,90,0.1); color:var(--accent);">${ex.tag}</span>
+                            <p style="color:var(--accent); font-size:12px; font-weight:bold; margin-top:4px;">${ex.v}</p>
+                        </div>
+                        <div style="color:#333">▼</div>
+                    </div>
+                    <div class="details">
+                        <p style="font-size:12px; color:#aaa; margin-bottom:8px;"><strong style="color:var(--accent)">Pourquoi:</strong> ${ex.why}</p>
+                        <p style="font-size:12px; color:#ddd;"><strong style="color:var(--accent)">Conseil:</strong> ${ex.cue}</p>
+                    </div>
+                </div>
+            `;
+        });
+        container.innerHTML = html;
+    }
+
+    function showTab(id, btn) {
+        document.querySelectorAll('.panel').forEach(p => p.classList.remove('active'));
+        document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+        document.getElementById(id).classList.add('active');
+        btn.classList.add('active');
+    }
+
+    function selectSession(idx, el) {
+        document.querySelectorAll('.sess-card').forEach(c => c.classList.remove('active'));
+        el.classList.add('active');
+        renderExercises(idx);
+    }
+
+    renderExercises(0);
+</script>
+
+</body>
+</html>
