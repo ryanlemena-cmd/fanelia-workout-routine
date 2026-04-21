@@ -1,213 +1,698 @@
 <!DOCTYPE html>
+
 <html lang="fr">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Sculpt & Définition</title>
-    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=DM+Sans:wght@300;400;500;700&display=swap" rel="stylesheet">
-    <style>
-        :root {
-            --bg: #080808; --surface: #0f0f0f; --border: #1a1a1a;
-            --accent: #C8F45A; --accent2: #F45A8C; --accent3: #5AC8F4;
-            --text: #f0ede6; --muted: #555;
-        }
-        * { box-sizing: border-box; margin: 0; padding: 0; }
-        body { 
-            background: var(--bg); color: var(--text); 
-            font-family: 'DM Sans', sans-serif; line-height: 1.5;
-            padding-bottom: 50px;
-        }
-        .hero {
-            padding: 36px 24px 28px; border-bottom: 1px solid var(--border);
-            background: linear-gradient(180deg, #0f0f0f 0%, #080808 100%);
-            position: sticky; top: 0; z-index: 20;
-        }
-        .hero-inner { max-width: 680px; margin: 0 auto; }
-        h1 {
-            font-family: 'Playfair Display', serif; font-size: 26px; font-weight: 900;
-            background: linear-gradient(135deg, var(--accent) 0%, var(--accent3) 100%);
-            -webkit-background-clip: text; -webkit-text-fill-color: transparent;
-        }
-        .tabs { display: flex; gap: 6px; margin-top: 20px; overflow-x: auto; }
-        .tab-btn {
-            padding: 8px 16px; border-radius: 20px; border: 1px solid #222;
-            background: transparent; color: var(--muted); font-weight: 600;
-            font-size: 12px; cursor: pointer; white-space: nowrap;
-        }
-        .tab-btn.active { background: var(--accent); color: #080808; border: none; }
-        
-        .panel { display: none; max-width: 680px; margin: 0 auto; padding: 24px 20px; }
-        .panel.active { display: block; }
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Programme Sculpt & Définition</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=DM+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
-        /* Sessions */
-        .grid-sessions { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 10px; margin-bottom: 20px; }
-        .sess-card {
-            background: var(--surface); border: 1px solid var(--border);
-            padding: 16px 10px; border-radius: 14px; text-align: center; cursor: pointer;
-        }
-        .sess-card.active { border: 1.5px solid var(--accent); background: rgba(200, 244, 90, 0.1); }
+```
+:root {
+  --bg: #080808;
+  --bg2: #0f0f0f;
+  --bg3: #161616;
+  --border: #1a1a1a;
+  --text: #f0ede6;
+  --muted: #888;
+  --dim: #444;
+  --green: #C8F45A;
+  --pink: #F45A8C;
+  --blue: #5AC8F4;
+  --orange: #F4A85A;
+}
 
-        .ex-card {
-            background: var(--surface); border: 1px solid #181818;
-            border-radius: 12px; margin-bottom: 8px; padding: 14px 16px; cursor: pointer;
-        }
-        .ex-tag {
-            font-size: 9px; padding: 2px 7px; border-radius: 8px;
-            text-transform: uppercase; margin-left: 8px; font-weight: bold;
-        }
-        .details { display: none; margin-top: 15px; padding-top: 15px; border-top: 1px solid rgba(255,255,255,0.05); }
-        .details.open { display: block; }
-        
-        .tip-card {
-            background: var(--surface); border: 1px solid var(--border);
-            padding: 18px; border-radius: 14px; margin-bottom: 12px;
-        }
-        .roadmap-step {
-            display: flex; gap: 16px; padding: 18px; background: var(--surface);
-            border-radius: 14px; margin-bottom: 14px; border-left: 3px solid var(--accent);
-        }
-    </style>
+html { scroll-behavior: smooth; }
+
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: 'DM Sans', sans-serif;
+  min-height: 100vh;
+  padding-bottom: 80px;
+}
+
+::-webkit-scrollbar { width: 4px; }
+::-webkit-scrollbar-track { background: #111; }
+::-webkit-scrollbar-thumb { background: #333; border-radius: 2px; }
+
+/* ── HEADER ── */
+.header {
+  position: sticky; top: 0; z-index: 100;
+  background: linear-gradient(180deg, #0f0f0f 0%, #080808 100%);
+  border-bottom: 1px solid var(--border);
+  padding: 28px 24px 20px;
+}
+.header-inner {
+  max-width: 680px; margin: 0 auto;
+}
+.header-top {
+  display: flex; justify-content: space-between; align-items: flex-start;
+}
+.header-eyebrow {
+  font-size: 10px; letter-spacing: 5px; color: #444;
+  text-transform: uppercase; margin-bottom: 8px;
+}
+.header-title {
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(20px, 5vw, 28px);
+  font-weight: 900; letter-spacing: -1px;
+  background: linear-gradient(135deg, var(--green) 0%, var(--blue) 100%);
+  -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+.header-meta { text-align: right; }
+.header-meta span { display: block; font-size: 11px; color: var(--muted); margin-bottom: 3px; }
+.header-meta span.goal { color: var(--pink); }
+
+/* ── TABS ── */
+.tabs {
+  display: flex; gap: 6px; margin-top: 18px; flex-wrap: wrap;
+}
+.tab-btn {
+  padding: 8px 16px; border-radius: 20px;
+  background: transparent; color: var(--muted);
+  border: 1px solid #222; cursor: pointer;
+  font-size: 12px; font-weight: 600;
+  font-family: 'DM Sans', sans-serif;
+  letter-spacing: 0.5px;
+  transition: all 0.2s;
+}
+.tab-btn:hover { opacity: 0.8; }
+.tab-btn.active {
+  background: var(--green); color: var(--bg);
+  border-color: transparent;
+}
+
+/* ── CONTENT ── */
+.content { max-width: 680px; margin: 0 auto; padding: 24px 20px 0; }
+.panel { display: none; }
+.panel.active { display: block; }
+
+/* ── SESSION PICKER ── */
+.session-grid {
+  display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 10px; margin-bottom: 20px;
+}
+.sess-btn {
+  padding: 16px 10px; border-radius: 14px;
+  background: var(--bg2); border: 1px solid var(--border);
+  cursor: pointer; text-align: center; transition: all 0.2s;
+  font-family: 'DM Sans', sans-serif;
+}
+.sess-btn:hover { opacity: 0.85; }
+.sess-btn .s-icon { font-size: 22px; margin-bottom: 6px; }
+.sess-btn .s-name { font-size: 12px; font-weight: 700; color: #ccc; }
+.sess-btn .s-day { font-size: 10px; color: var(--muted); margin-top: 3px; }
+
+/* ── SESSION INFO CARD ── */
+.sess-info {
+  background: var(--bg2); border-radius: 16px; padding: 20px;
+  margin-bottom: 16px;
+}
+.sess-info-top {
+  display: flex; justify-content: space-between; align-items: flex-start; flex-wrap: wrap; gap: 8px;
+}
+.sess-eyebrow {
+  font-size: 10px; letter-spacing: 4px; text-transform: uppercase; margin-bottom: 6px;
+}
+.sess-title {
+  font-family: 'Playfair Display', serif; font-size: 18px; font-weight: 700;
+}
+.sess-sub { font-size: 12px; color: #666; margin-top: 4px; }
+.sess-duration { font-size: 11px; color: var(--muted); white-space: nowrap; padding-top: 4px; }
+.warmup-box {
+  margin-top: 14px; padding: 10px 14px;
+  background: #1a1a1a; border-radius: 8px;
+  font-size: 12px; color: #aaa; line-height: 1.6;
+}
+.warmup-label { font-size: 10px; letter-spacing: 2px; text-transform: uppercase; font-weight: 600; }
+
+/* ── LEGEND ── */
+.legend { display: flex; gap: 6px; flex-wrap: wrap; margin-bottom: 14px; }
+.legend-tag {
+  font-size: 10px; padding: 3px 8px; border-radius: 10px;
+  letter-spacing: 0.5px;
+}
+
+/* ── EXERCISE CARDS ── */
+.ex-card {
+  background: var(--bg2); border-radius: 12px; margin-bottom: 8px;
+  border: 1px solid #181818; cursor: pointer; overflow: hidden;
+  transition: background 0.15s, border-color 0.15s;
+}
+.ex-card:hover { background: var(--bg3); }
+.ex-header {
+  display: flex; align-items: center; padding: 14px 16px; gap: 12px;
+}
+.ex-num {
+  width: 30px; height: 30px; border-radius: 8px; flex-shrink: 0;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 12px; font-weight: 700;
+}
+.ex-info { flex: 1; min-width: 0; }
+.ex-name-row { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
+.ex-name { font-size: 13px; font-weight: 600; }
+.ex-tag-pill {
+  font-size: 9px; padding: 2px 7px; border-radius: 8px;
+  letter-spacing: 0.5px; font-weight: 600;
+}
+.ex-new { font-size: 11px; font-weight: 600; margin-top: 4px; }
+.ex-meta { font-size: 10px; color: var(--dim); margin-top: 2px; }
+.ex-chevron { color: #333; font-size: 12px; flex-shrink: 0; transition: transform 0.2s; }
+.ex-card.open .ex-chevron { transform: rotate(180deg); }
+
+.ex-body {
+  display: none; padding: 0 16px 16px;
+  border-top: 1px solid rgba(255,255,255,0.03);
+}
+.ex-card.open .ex-body { display: block; }
+.ex-why, .ex-cue {
+  padding: 10px 14px; border-radius: 8px;
+  font-size: 12px; line-height: 1.7; margin-top: 10px;
+}
+.ex-why { background: #1a1a1a; color: #bbb; }
+.ex-cue { color: #ddd; }
+.ex-label { font-weight: 700; margin-right: 4px; }
+
+/* ── CARDIO BOX ── */
+.cardio-box {
+  margin-top: 16px; padding: 16px 18px;
+  border-radius: 12px; border: 1px solid transparent;
+}
+.cardio-label {
+  font-size: 10px; letter-spacing: 3px; text-transform: uppercase;
+  margin-bottom: 8px; font-weight: 600;
+}
+.cardio-text { font-size: 13px; color: #ccc; line-height: 1.6; }
+
+/* ── COACH NOTE ── */
+.coach-note {
+  margin-top: 12px; padding: 14px 18px;
+  background: var(--bg2); border-radius: 12px;
+  border: 1px solid #222; border-left: 3px solid var(--green);
+}
+.coach-note-label {
+  font-size: 10px; color: var(--muted); letter-spacing: 3px;
+  text-transform: uppercase; margin-bottom: 6px;
+}
+.coach-note-text { font-size: 12px; color: #999; line-height: 1.7; }
+
+/* ── SECTION TITLE ── */
+.section-title {
+  font-family: 'Playfair Display', serif; font-size: 20px; font-weight: 700;
+  margin-bottom: 6px;
+}
+.section-sub { font-size: 12px; color: var(--muted); line-height: 1.6; margin-bottom: 20px; }
+
+/* ── NUTRITION CARDS ── */
+.nutri-card {
+  background: var(--bg2); border-radius: 14px; padding: 18px;
+  margin-bottom: 12px; border: 1px solid var(--border);
+}
+.nutri-card.priority { border-width: 1.5px; }
+.priority-badge {
+  display: inline-block; font-size: 9px; padding: 2px 8px;
+  border-radius: 8px; letter-spacing: 2px; text-transform: uppercase;
+  margin-bottom: 10px; font-weight: 600;
+}
+.nutri-inner { display: flex; gap: 14px; align-items: flex-start; }
+.nutri-emoji { font-size: 28px; flex-shrink: 0; }
+.nutri-title { font-size: 14px; font-weight: 700; margin-bottom: 6px; }
+.nutri-text { font-size: 12px; color: #aaa; line-height: 1.7; }
+
+/* ── MEAL TIMING ── */
+.meal-row {
+  display: flex; gap: 14px; margin-bottom: 10px;
+  padding: 12px 14px; background: var(--bg2); border-radius: 10px;
+  border: 1px solid #161616;
+}
+.meal-row.highlight { border-color: rgba(200, 244, 90, 0.25); }
+.meal-time { font-size: 11px; font-weight: 700; color: var(--green); min-width: 50px; padding-top: 2px; }
+.meal-label { font-size: 12px; font-weight: 600; color: #ddd; }
+.meal-label.hl { color: var(--green); }
+.meal-desc { font-size: 11px; color: #666; margin-top: 3px; }
+
+/* ── ROADMAP ── */
+.phase-card {
+  display: flex; gap: 16px; margin-bottom: 14px;
+  padding: 18px; background: var(--bg2); border-radius: 14px;
+  border: 1px solid var(--border); border-left: 3px solid var(--muted);
+}
+.phase-left { min-width: 60px; flex-shrink: 0; }
+.phase-weeks { font-size: 10px; font-weight: 700; letter-spacing: 1px; }
+.phase-emoji { font-size: 18px; margin-top: 6px; }
+.phase-title { font-size: 14px; font-weight: 700; margin-bottom: 6px; }
+.phase-desc { font-size: 12px; color: var(--muted); line-height: 1.6; }
+
+.metric-row {
+  display: flex; gap: 12px; margin-bottom: 10px;
+  padding: 14px; background: var(--bg2); border-radius: 10px;
+  border: 1px solid #181818;
+}
+.metric-emoji { font-size: 22px; flex-shrink: 0; }
+.metric-title { font-size: 13px; font-weight: 600; }
+.metric-desc { font-size: 11px; color: #666; margin-top: 3px; }
+
+.coach-final {
+  margin-top: 20px; padding: 18px;
+  background: rgba(200,244,90,0.04); border-radius: 14px;
+  border: 1px solid rgba(200,244,90,0.15);
+}
+.coach-final-label { font-size: 12px; color: var(--green); font-weight: 700; margin-bottom: 8px; }
+.coach-final-text { font-size: 12px; color: #999; line-height: 1.8; }
+
+/* ── ANIMATIONS ── */
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+.panel.active { animation: fadeIn 0.25s ease; }
+
+/* ── RESPONSIVE ── */
+@media (max-width: 480px) {
+  .header { padding: 20px 16px 16px; }
+  .content { padding: 20px 14px 0; }
+  .sess-btn .s-name { font-size: 11px; }
+  .meal-time { min-width: 40px; font-size: 10px; }
+}
+```
+
+  </style>
 </head>
 <body>
 
-<div class="hero">
-    <div class="hero-inner">
-        <div style="display:flex; justify-content: space-between;">
-            <div>
-                <p style="font-size: 10px; letter-spacing: 3px; color: #444; text-transform: uppercase;">Programme personnalisé</p>
-                <h1>SCULPT & DÉFINITION</h1>
-            </div>
-            <div style="text-align: right; font-size: 11px;">
-                <p style="color: #555;">160cm · 64kg</p>
-                <p style="color: var(--accent2);">Objectif −10kg</p>
-            </div>
-        </div>
-        <div class="tabs">
-            <button class="tab-btn active" onclick="showTab('sessions', this)">Programme</button>
-            <button class="tab-btn" onclick="showTab('nutrition', this)">Nutrition</button>
-            <button class="tab-btn" onclick="showTab('plan', this)">Roadmap</button>
-        </div>
-    </div>
+<!-- HEADER -->
+
+<header class="header">
+  <div class="header-inner">
+    <div class="header-top">
+      <div>
+        <div class="header-eyebrow">Programme personnalisé · 3×/semaine</div>
+        <h1 class="header-title">SCULPT & DÉFINITION</h1>
+      </div>
+      <div class="header-meta">
+        <span>160cm · 64kg</span>
+        <span class="goal">Objectif −10kg</span>
+      </div>
+    </div>
+    <nav class="tabs">
+      <button class="tab-btn active" onclick="switchTab('sessions', this)">Programme</button>
+      <button class="tab-btn" onclick="switchTab('nutrition', this)">Nutrition</button>
+      <button class="tab-btn" onclick="switchTab('roadmap', this)">Roadmap</button>
+    </nav>
+  </div>
+</header>
+
+<main class="content">
+
+  <!-- ══════════════════════════════════════
+       PANEL : PROGRAMME
+  ══════════════════════════════════════ -->
+
+  <section id="panel-sessions" class="panel active">
+
+```
+<!-- Session picker -->
+<div class="session-grid">
+  <button class="sess-btn active-sess" id="sbtn-0"
+    style="border-color: var(--green); background: rgba(200,244,90,0.08);"
+    onclick="switchSession(0)">
+    <div class="s-icon">🍑</div>
+    <div class="s-name" style="color: var(--green);">Séance A</div>
+    <div class="s-day">Lundi</div>
+  </button>
+  <button class="sess-btn" id="sbtn-1" onclick="switchSession(1)">
+    <div class="s-icon">🔥</div>
+    <div class="s-name">Séance B</div>
+    <div class="s-day">Mercredi</div>
+  </button>
+  <button class="sess-btn" id="sbtn-2" onclick="switchSession(2)">
+    <div class="s-icon">💪</div>
+    <div class="s-name">Séance C</div>
+    <div class="s-day">Vendredi</div>
+  </button>
 </div>
 
-<div id="sessions" class="panel active">
-    <div class="grid-sessions">
-        <div class="sess-card active" onclick="selectSession(0, this)">
-            <div style="font-size:22px">🍑</div>
-            <div style="font-size:12px; font-weight:700">Séance A</div>
-            <div style="font-size:10px; color:var(--muted)">Lundi</div>
-        </div>
-        <div class="sess-card" onclick="selectSession(1, this)">
-            <div style="font-size:22px">🔥</div>
-            <div style="font-size:12px; font-weight:700">Séance B</div>
-            <div style="font-size:10px; color:var(--muted)">Mercredi</div>
-        </div>
-        <div class="sess-card" onclick="selectSession(2, this)">
-            <div style="font-size:22px">💪</div>
-            <div style="font-size:12px; font-weight:700">Séance C</div>
-            <div style="font-size:10px; color:var(--muted)">Vendredi</div>
-        </div>
-    </div>
-    <div id="exercise-list"></div>
+<!-- Session container (filled by JS) -->
+<div id="session-content"></div>
+```
+
+  </section>
+
+  <!-- ══════════════════════════════════════
+       PANEL : NUTRITION
+  ══════════════════════════════════════ -->
+
+  <section id="panel-nutrition" class="panel">
+    <h2 class="section-title">Nutrition & Compléments</h2>
+    <p class="section-sub">L'alimentation représente ~70% de tes résultats. Voici ce qui compte vraiment.</p>
+
+```
+<!-- Caséine timing — priorité -->
+<div class="nutri-card priority" style="border-color: var(--pink);">
+  <div class="priority-badge" style="background: rgba(244,90,140,0.15); color: var(--pink); border: 1px solid rgba(244,90,140,0.3);">
+    ⚠ À corriger en priorité
+  </div>
+  <div class="nutri-inner">
+    <div class="nutri-emoji">🥛</div>
+    <div>
+      <div class="nutri-title" style="color: var(--pink);">Caséine : mauvais timing</div>
+      <p class="nutri-text">Ta caséine micellaire est idéale <strong>AVANT DE DORMIR</strong>, pas juste après séance. Après l'effort, prends plutôt une whey isolate (digestion rapide). La caséine libère les acides aminés lentement pendant 6–8h — c'est parfait pour la nuit, pas pour la récup post-entraînement.</p>
+    </div>
+  </div>
 </div>
 
-<div id="nutrition" class="panel">
-    <div class="tip-card" style="border: 1.5px solid var(--accent2)">
-        <p style="font-size:9px; color:var(--accent2); font-weight:bold; margin-bottom:10px;">⚠ PRIORITÉ</p>
-        <p style="font-weight:bold; color:var(--accent2)">Caséine : mauvais timing</p>
-        <p style="font-size:12px; color:#aaa; margin-top:5px;">Prends-la AVANT DE DORMIR, pas juste après séance. Après l’effort, préfère la Whey Isolate.</p>
-    </div>
-    <div class="tip-card">
-        <p style="font-weight:bold; color:var(--accent)">Déficit calorique doux</p>
-        <p style="font-size:12px; color:#aaa; margin-top:5px;">Vise 1600-1700 kcal/jour pour perdre sans fatiguer le muscle.</p>
-    </div>
+<div class="nutri-card">
+  <div class="nutri-inner">
+    <div class="nutri-emoji">🍗</div>
+    <div>
+      <div class="nutri-title" style="color: var(--green);">Protéines : objectif journalier</div>
+      <p class="nutri-text">Pour perdre du gras tout en préservant le muscle : vise <strong>1,8 à 2g de protéines par kg</strong> de poids de corps, soit 115–128g/jour. Répartis sur 3–4 repas.</p>
+    </div>
+  </div>
 </div>
 
-<div id="plan" class="panel">
-    <div class="roadmap-step">
-        <div><p style="font-weight:bold; color:var(--accent)">S1-S4 : Adaptation</p>
-        <p style="font-size:12px; color:#888">Maîtrise des formes, pas de charge excessive.</p></div>
-    </div>
-    <div class="roadmap-step" style="border-color: var(--accent3)">
-        <div><p style="font-weight:bold; color:var(--accent3)">S5-S8 : Progression</p>
-        <p style="font-size:12px; color:#888">+2.5kg sur les grands exercices.</p></div>
-    </div>
+<div class="nutri-card">
+  <div class="nutri-inner">
+    <div class="nutri-emoji">⚡</div>
+    <div>
+      <div class="nutri-title" style="color: var(--blue);">Déficit calorique doux</div>
+      <p class="nutri-text">Vise –300 à –400 kcal/jour. Pas plus, sinon tu perds du muscle. Environ <strong>1600–1700 kcal/jour</strong> selon ton activité. Priorité : glucides autour des séances, légumes le reste du temps.</p>
+    </div>
+  </div>
 </div>
+
+<div class="nutri-card">
+  <div class="nutri-inner">
+    <div class="nutri-emoji">🕐</div>
+    <div>
+      <div class="nutri-title" style="color: var(--green);">Manger avant la séance</div>
+      <p class="nutri-text">1h30–2h avant : repas léger avec glucides lents + protéines (ex : riz + poulet, ou flocons d'avoine + skyr). Évite les graisses juste avant l'effort.</p>
+    </div>
+  </div>
+</div>
+
+<!-- Meal timing -->
+<h3 class="section-title" style="font-size:15px; margin: 28px 0 14px;">Exemple de journée d'entraînement</h3>
+
+<div class="meal-row"><div class="meal-time">7h30</div><div><div class="meal-label">Réveil</div><div class="meal-desc">Verre d'eau + café noir ou thé</div></div></div>
+<div class="meal-row"><div class="meal-time">9h00</div><div><div class="meal-label">Petit-déjeuner</div><div class="meal-desc">Flocons d'avoine 60g + skyr 150g + fruits rouges</div></div></div>
+<div class="meal-row"><div class="meal-time">12h30</div><div><div class="meal-label">Déjeuner</div><div class="meal-desc">Riz 80g + poulet 130g + légumes verts + huile d'olive</div></div></div>
+<div class="meal-row"><div class="meal-time">16h30</div><div><div class="meal-label">Pré-séance (si séance 18h)</div><div class="meal-desc">Galettes de riz + 1 fruit + 20g amandes</div></div></div>
+<div class="meal-row"><div class="meal-time">18h–19h30</div><div><div class="meal-label">Séance</div><div class="meal-desc">Eau 600ml–1L</div></div></div>
+<div class="meal-row"><div class="meal-time">20h00</div><div><div class="meal-label">Dîner post-séance</div><div class="meal-desc">Saumon 150g + patate douce + salade · Whey isolate si dispo</div></div></div>
+<div class="meal-row highlight"><div class="meal-time">22h30</div><div><div class="meal-label hl">Avant dodo</div><div class="meal-desc">Caséine micellaire 30g — ton shaker ici ✓</div></div></div>
+```
+
+  </section>
+
+  <!-- ══════════════════════════════════════
+       PANEL : ROADMAP
+  ══════════════════════════════════════ -->
+
+  <section id="panel-roadmap" class="panel">
+    <h2 class="section-title">Roadmap 3 mois</h2>
+    <p class="section-sub">−10kg se fait en 4 à 6 mois avec ce programme. Voici comment progresser intelligemment.</p>
+
+```
+<div class="phase-card" style="border-left-color: #444;">
+  <div class="phase-left">
+    <div class="phase-weeks" style="color: #888;">S1–S4</div>
+    <div class="phase-emoji">🌱</div>
+  </div>
+  <div>
+    <div class="phase-title" style="color: #888;">Phase 1 — Adaptation</div>
+    <p class="phase-desc">Maîtrise des nouvelles formes. Ne cherche pas à charger à fond. L'objectif est de graver les patterns de mouvements.</p>
+  </div>
+</div>
+
+<div class="phase-card" style="border-left-color: var(--blue);">
+  <div class="phase-left">
+    <div class="phase-weeks" style="color: var(--blue);">S5–S8</div>
+    <div class="phase-emoji">📈</div>
+  </div>
+  <div>
+    <div class="phase-title" style="color: var(--blue);">Phase 2 — Progression</div>
+    <p class="phase-desc">+2,5kg sur les grands exercices (hip thrust, presse, RDL). Observe les réponses de ton corps. La progression doit être régulière.</p>
+  </div>
+</div>
+
+<div class="phase-card" style="border-left-color: var(--green);">
+  <div class="phase-left">
+    <div class="phase-weeks" style="color: var(--green);">S9–S12</div>
+    <div class="phase-emoji">🔥</div>
+  </div>
+  <div>
+    <div class="phase-title" style="color: var(--green);">Phase 3 — Intensification</div>
+    <p class="phase-desc">Introduction des drop sets et super-sets sur certains exercices. Augmentation du cardio si la perte de gras ralentit.</p>
+  </div>
+</div>
+
+<div class="phase-card" style="border-left-color: var(--pink);">
+  <div class="phase-left">
+    <div class="phase-weeks" style="color: var(--pink);">S13+</div>
+    <div class="phase-emoji">🎯</div>
+  </div>
+  <div>
+    <div class="phase-title" style="color: var(--pink);">Phase 4 — Réévaluation</div>
+    <p class="phase-desc">Mesures + photos. Ajuste le programme selon les résultats. Objectif atteint ou nouveau cycle selon tes progrès.</p>
+  </div>
+</div>
+
+<h3 class="section-title" style="font-size:15px; margin: 28px 0 14px;">Indicateurs à suivre</h3>
+<p style="font-size:12px; color: var(--muted); margin-bottom:14px;">Ne te fie pas uniquement à la balance !</p>
+
+<div class="metric-row"><div class="metric-emoji">📸</div><div><div class="metric-title" style="color: var(--green);">Photos</div><div class="metric-desc">Toutes les 4 semaines, même angle, même heure</div></div></div>
+<div class="metric-row"><div class="metric-emoji">📏</div><div><div class="metric-title" style="color: var(--blue);">Mensurations</div><div class="metric-desc">Tour de taille, hanches, cuisses — 1x/mois</div></div></div>
+<div class="metric-row"><div class="metric-emoji">⚖️</div><div><div class="metric-title" style="color: var(--muted);">Poids</div><div class="metric-desc">Moyenne hebdomadaire (peser 3x/semaine, faire la moyenne)</div></div></div>
+<div class="metric-row"><div class="metric-emoji">💪</div><div><div class="metric-title" style="color: var(--pink);">Charges</div><div class="metric-desc">Tableau de suivi des charges sur les exercices principaux</div></div></div>
+<div class="metric-row"><div class="metric-emoji">😴</div><div><div class="metric-title" style="color: var(--orange);">Énergie & sommeil</div><div class="metric-desc">Si tu es épuisée, mange plus. Le déficit ne doit pas nuire à la récup.</div></div></div>
+
+<div class="coach-final">
+  <div class="coach-final-label">💬 Message de ton coach</div>
+  <p class="coach-final-text">Tu as déjà une très bonne base. Tes hip thrusts à 80kg sont solides, et ton programme fonctionnel est excellent. Les ajustements clés : augmenter les charges sur le bas du corps, réorganiser ta caséine, et ajouter du volume cardio intelligent. Avec de la régularité, −10kg en 5–6 mois est tout à fait réaliste tout en gagnant du tonus.</p>
+</div>
+```
+
+  </section>
+
+</main>
 
 <script>
-    const data = [
-        {
-            theme: "Bas du corps — Fessiers",
-            warmup: "8 min vélo ou tapis incliné 7%",
-            exercises: [
-                { n: "Hip Thrust", v: "4×10 @ 82,5kg", tag: "🔑 Priorité", why: "Principal exercice fessiers. Contracte fort en haut.", cue: "Pousse avec les talons, menton rentré." },
-                { n: "Bulgarian Split Squat", v: "4×8 @ 12kg", tag: "✨ Nouveau", why: "Cible unilatérale efficace.", cue: "Pied avant loin, descend lentement." },
-                { n: "Press Leg", v: "4×10 @ 82,5kg", tag: "🔧 Ajusté", why: "Pieds haut sur plateforme.", cue: "Ne verrouille pas les genoux." }
-            ]
-        },
-        {
-            theme: "Full Body Fonctionnel",
-            warmup: "5 min corde à sauter",
-            exercises: [
-                { n: "Squat to Press", v: "4×12 @ 8kg", tag: "📈 Progression", why: "Brûle beaucoup de calories.", cue: "Explosif vers le haut." },
-                { n: "Dumbbell Swing", v: "4×15 @ 12kg", tag: "📈 Progression", why: "Cardio + Fessiers.", cue: "Hanches explosives." }
-            ]
-        },
-        {
-            theme: "Haut du corps",
-            warmup: "5 min vélo doux + rotations",
-            exercises: [
-                { n: "Lat Pulldown", v: "4×12 @ 27,5kg", tag: "📈 Progression", why: "Tonifie sans grossir.", cue: "Tire vers le menton." },
-                { n: "Lateral Raise", v: "3×15 @ 6kg", tag: "🔧 Ajusté", why: "Épaules rondes.", cue: "Pas de balancement." }
-            ]
-        }
-    ];
+// ══════════════════════════════════════════════
+//  DATA
+// ══════════════════════════════════════════════
+const SESSIONS = [
+  {
+    id: 0, label: "Séance A", day: "Lundi",
+    theme: "Bas du corps — Fessiers & Cuisses",
+    subtitle: "Focus glutes + quad + ischios",
+    color: "#C8F45A", icon: "🍑", duration: "65–75 min",
+    warmup: "8 min vélo ou tapis incliné 7% · mobilité hanches 2 min",
+    exercises: [
+      { name: "Hip Thrust (barre)", current: "3×10 @ 80kg", newLoad: "4×10 @ 82,5–87,5kg", rest: "90s", tag: "🔑 Priorité",
+        why: "Principal exercice fessiers. Augmente progressivement de 2,5kg toutes les 2 semaines. Contracte fort en haut, 1s de pause.",
+        cue: "Menton rentré, côtes baissées, pousse avec les talons" },
+      { name: "Bulgarian Split Squat (haltères)", current: "—", newLoad: "4×8 par jambe @ 10–12kg each", rest: "75s", tag: "✨ Nouveau",
+        why: "Remplace ton squat classique trop léger. Cible unilatéralement quad + fessier. Bien plus efficace pour ton objectif.",
+        cue: "Pied avant loin, genou ne dépasse pas les orteils, descend lentement" },
+      { name: "Press Leg — pied haut", current: "3×10 @ 80kg", newLoad: "4×10 @ 82,5kg — pieds hauts sur plateforme", rest: "75s", tag: "🔧 Ajusté",
+        why: "Place les pieds haut et écartés pour recruter davantage les fessiers vs les quads.",
+        cue: "Pieds à hauteur des épaules, haut de la plateforme. Ne verrouille pas les genoux." },
+      { name: "RDL Roumain", current: "3×12 @ 18kg", newLoad: "4×10 @ 20–22kg", rest: "75s", tag: "📈 Progression",
+        why: "Ischios et bas des fessiers. Charge à augmenter progressivement.",
+        cue: "Dos plat, pousse les hanches en arrière, barre près des tibias" },
+      { name: "Abducteurs machine", current: "3×10 @ 50kg", newLoad: "3×15 @ 45kg", rest: "60s", tag: "🔧 Ajusté",
+        why: "Plus de volume à charge modérée pour hypertrophie des abducteurs sans volume excessif.",
+        cue: "Contraction lente en ouverture, retour contrôlé" },
+      { name: "Leg Extension", current: "3×10 @ 45kg", newLoad: "3×12 @ 45kg (finisher quad)", rest: "60s", tag: "✓ Maintenu",
+        why: "Maintenu en finisher pour graver le quad en isolation.",
+        cue: "Contraction maximale en haut, descente lente 3 secondes" },
+      { name: "Cable Kickback (fessier)", current: "—", newLoad: "3×15 par jambe @ 10–15kg", rest: "45s", tag: "✨ Nouveau",
+        why: "Finisher isolé fessier pour maximiser l'activation en fin de séance.",
+        cue: "Hanche stable, extension derrière, pas de rotation du bassin" },
+    ],
+    cardio: "15 min vélo position assise droite — résistance 6–8, rythme soutenu mais conversationnel",
+    coachNote: "Cette séance est ta séance prioritaire. Ne la rate jamais. Si tu ne viens que 2x/semaine, c'est celle-là et la B.",
+  },
+  {
+    id: 1, label: "Séance B", day: "Mercredi",
+    theme: "Full Body Fonctionnel — Cardio & Brûlage",
+    subtitle: "HIIT + gainage + dépense calorique max",
+    color: "#F45A8C", icon: "🔥", duration: "55–65 min",
+    warmup: "5 min corde à sauter ou stepping léger",
+    exercises: [
+      { name: "RDL to Row (haltères)", current: "3×10 @ 8kg each", newLoad: "4×10 @ 10kg each", rest: "60s", tag: "📈 Progression",
+        why: "Excellent exercice fonctionnel dos + ischios. Légère augmentation de charge.",
+        cue: "Dos plat pendant le RDL, tirer les coudes vers le plafond au row" },
+      { name: "Squat to Press", current: "3×10 @ 6kg each", newLoad: "4×12 @ 7–8kg each", rest: "60s", tag: "📈 Progression",
+        why: "Full body, brûle beaucoup de calories. Bonne base, on augmente le volume.",
+        cue: "Assieds-toi vraiment dans le squat, presse en explosif en montant" },
+      { name: "Reverse Lunge + Hammer Curl", current: "3×10 each @ 6kg", newLoad: "3×12 each @ 7kg", rest: "60s", tag: "📈 Progression",
+        why: "Excellent pour l'équilibre et le gainage. Légère progression.",
+        cue: "Genou arrière effleure le sol, biceps au curl sans balancer le buste" },
+      { name: "Dumbbell Swing", current: "3×15 @ 10kg", newLoad: "4×15 @ 12kg", rest: "45s", tag: "📈 Progression",
+        why: "Top exercice cardio-musculaire. Fessiers + dos + cardio en un.",
+        cue: "Poussée des hanches explosive, bras passifs, hinge et pas squat" },
+      { name: "Dumbbell Halo", current: "3×6 each @ 6kg", newLoad: "3×8 each @ 7kg", rest: "45s", tag: "📈 Progression",
+        why: "Mobilité épaules + core. Légère progression.",
+        cue: "Core contracté, cercle proche de la tête, sans incliner le buste" },
+      { name: "Circuit Abdos (3 tours)", current: "—", newLoad: "Planche 40s + Bicycle 20 + Relevé jambes 12", rest: "30s / 90s entre tours", tag: "✨ Nouveau",
+        why: "Ajout ciblé ventre. 3 tours = environ 10 min de gainage intensif.",
+        cue: "Planche : corps aligné. Bicycle : coude vers genou opposé. Relevé : lombaires au sol." },
+    ],
+    cardio: "20 min elliptique en intervalles : 2 min effort fort (résistance 10) / 1 min récupération (résistance 4) — répéter 7x",
+    coachNote: "Cette séance est ta séance brûle-graisse. L'elliptique en intervalles crée un effet afterburn : tu continues à brûler des calories pendant 24–48h après.",
+  },
+  {
+    id: 2, label: "Séance C", day: "Vendredi",
+    theme: "Haut du corps — Tonification sans volume",
+    subtitle: "Dos + épaules + bras — charges légères, séries longues",
+    color: "#5AC8F4", icon: "💪", duration: "55–65 min",
+    warmup: "5 min vélo doux + rotation épaules + bandes élastiques",
+    exercises: [
+      { name: "Lat Pulldown (pronation)", current: "3×10 @ 25kg", newLoad: "4×12 @ 27,5kg", rest: "60s", tag: "📈 Progression",
+        why: "Dos large — tonifie sans grossir. Augmente légèrement le volume.",
+        cue: "Tire vers le menton, coudes vers les hanches, ne te balance pas" },
+      { name: "Seated Cable Row (prise neutre)", current: "3×10 @ 30kg", newLoad: "4×12 @ 32,5kg", rest: "60s", tag: "📈 Progression",
+        why: "Dos moyen + trapèzes. Progression douce avec forme impeccable.",
+        cue: "Buste droit, serre les omoplates en fin de mouvement, 1s de contraction" },
+      { name: "Face Pull (poulie haute)", current: "—", newLoad: "3×15 @ 10–12kg", rest: "45s", tag: "✨ Nouveau",
+        why: "Exercice sous-coté : épaules arrière + santé rotateurs. Tonifie et protège.",
+        cue: "Tire vers le visage, coudes hauts, ouvre les mains en fin de mouvement" },
+      { name: "Lateral Raise + Drop Set", current: "3×10 @ 6kg each", newLoad: "3×15 @ 6kg (drop 5kg les 5 dernières)", rest: "60s", tag: "🔧 Ajusté",
+        why: "Épaules rondes sans volume. Drop set pour finir sans charger plus.",
+        cue: "Légère flexion des coudes, pouce vers le bas, pas de balancement" },
+      { name: "Bicep Curl (câble bas)", current: "3×10 @ 6kg each", newLoad: "3×15 @ 6–7kg each", rest: "45s", tag: "🔧 Ajusté",
+        why: "Le câble maintient la tension en bas du mouvement. Plus efficace que l'haltère.",
+        cue: "Coudes fixes, supination en haut, descente contrôlée 3s" },
+      { name: "Tricep Pushdown (corde)", current: "3×10 @ 10kg", newLoad: "3×15 @ 10–12kg", rest: "45s", tag: "🔧 Ajusté",
+        why: "La corde permet une ouverture en bas = meilleure contraction tricep.",
+        cue: "Coudes collés au corps, ouvre les mains en bas, extension complète" },
+      { name: "Overhead Tricep (câble, 1 main)", current: "3×10 @ 10kg", newLoad: "3×12 par bras @ 8–10kg", rest: "45s", tag: "🔧 Ajusté",
+        why: "Passer en unilatéral pour mieux contrôler et corriger les déséquilibres.",
+        cue: "Coude haut et fixe, extension complète, ne bascule pas le buste" },
+      { name: "Shoulder Press (haltères assis)", current: "3×10 @ 6kg each", newLoad: "3×12 @ 8kg each", rest: "60s", tag: "🔧 Ajusté",
+        why: "Remplace le bicep shoulder press. Développé assis plus efficace et équilibré.",
+        cue: "Bras à 90° au départ, presse sans verrouiller les coudes, descente lente" },
+    ],
+    cardio: "15 min tapis — marche inclinée 10–12%, vitesse 5,5–6km/h. Excellent brûle-graisse bas du corps sans impacter la récup.",
+    coachNote: "Charges légères + séries longues (12–15 reps) = tonification sans prise de volume. C'est exactement le stimulus que tu cherches pour les bras.",
+  }
+];
 
-    function renderExercises(idx) {
-        const container = document.getElementById('exercise-list');
-        const session = data[idx];
-        let html = `
-            <div style="background:#1a1a1a; padding:15px; border-radius:12px; margin-bottom:20px;">
-                <p style="font-size:10px; color:var(--accent); letter-spacing:2px;">${session.theme}</p>
-                <p style="font-size:12px; color:#888; margin-top:5px;">🔥 Échauffement: ${session.warmup}</p>
-            </div>
-        `;
-        
-        session.exercises.forEach((ex, i) => {
-            html += `
-                <div class="ex-card" onclick="this.querySelector('.details').classList.toggle('open')">
-                    <div style="display:flex; justify-content:space-between; align-items:center;">
-                        <div>
-                            <span style="font-weight:bold; font-size:14px;">${ex.n}</span>
-                            <span class="ex-tag" style="background:rgba(200,244,90,0.1); color:var(--accent);">${ex.tag}</span>
-                            <p style="color:var(--accent); font-size:12px; font-weight:bold; margin-top:4px;">${ex.v}</p>
-                        </div>
-                        <div style="color:#333">▼</div>
-                    </div>
-                    <div class="details">
-                        <p style="font-size:12px; color:#aaa; margin-bottom:8px;"><strong style="color:var(--accent)">Pourquoi:</strong> ${ex.why}</p>
-                        <p style="font-size:12px; color:#ddd;"><strong style="color:var(--accent)">Conseil:</strong> ${ex.cue}</p>
-                    </div>
-                </div>
-            `;
-        });
-        container.innerHTML = html;
-    }
+const TAG_STYLES = {
+  "🔑 Priorité": { bg: "rgba(200,244,90,0.1)", border: "rgba(200,244,90,0.25)", color: "#C8F45A" },
+  "✨ Nouveau":   { bg: "rgba(244,90,140,0.1)", border: "rgba(244,90,140,0.25)", color: "#F45A8C" },
+  "📈 Progression":{ bg: "rgba(90,200,244,0.1)", border: "rgba(90,200,244,0.25)", color: "#5AC8F4" },
+  "🔧 Ajusté":   { bg: "rgba(244,168,90,0.1)", border: "rgba(244,168,90,0.25)", color: "#F4A85A" },
+  "✓ Maintenu":  { bg: "rgba(85,85,85,0.15)",  border: "rgba(85,85,85,0.3)",   color: "#888" },
+};
 
-    function showTab(id, btn) {
-        document.querySelectorAll('.panel').forEach(p => p.classList.remove('active'));
-        document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
-        document.getElementById(id).classList.add('active');
-        btn.classList.add('active');
-    }
+// ══════════════════════════════════════════════
+//  RENDER SESSION
+// ══════════════════════════════════════════════
+let currentSession = 0;
 
-    function selectSession(idx, el) {
-        document.querySelectorAll('.sess-card').forEach(c => c.classList.remove('active'));
-        el.classList.add('active');
-        renderExercises(idx);
-    }
+function renderSession(idx) {
+  const s = SESSIONS[idx];
+  const c = s.color;
 
-    renderExercises(0);
+  const exercisesHTML = s.exercises.map((ex, i) => {
+    const ts = TAG_STYLES[ex.tag] || TAG_STYLES["✓ Maintenu"];
+    return `
+      <div class="ex-card" id="ex-${idx}-${i}" onclick="toggleEx(${idx}, ${i})">
+        <div class="ex-header">
+          <div class="ex-num" style="background:${ts.bg}; border:1px solid ${ts.border}; color:${ts.color}">${i+1}</div>
+          <div class="ex-info">
+            <div class="ex-name-row">
+              <span class="ex-name">${ex.name}</span>
+              <span class="ex-tag-pill" style="background:${ts.bg}; border:1px solid ${ts.border}; color:${ts.color}">${ex.tag}</span>
+            </div>
+            <div class="ex-new" style="color:${c}">${ex.newLoad}</div>
+            <div class="ex-meta">${ex.current !== "—" ? "Avant : " + ex.current + " · " : ""}Repos : ${ex.rest}</div>
+          </div>
+          <div class="ex-chevron">▼</div>
+        </div>
+        <div class="ex-body">
+          <div class="ex-why"><span class="ex-label" style="color:${c}">Pourquoi ·</span>${ex.why}</div>
+          <div class="ex-cue" style="background:${c}0a; border:1px solid ${c}20"><span class="ex-label" style="color:${c}">Technique ·</span>${ex.cue}</div>
+        </div>
+      </div>
+    `;
+  }).join("");
+
+  document.getElementById("session-content").innerHTML = `
+    <div class="sess-info" style="border-left: 3px solid ${c}">
+      <div class="sess-info-top">
+        <div>
+          <div class="sess-eyebrow" style="color:${c}">${s.label} · ${s.day}</div>
+          <div class="sess-title">${s.theme}</div>
+          <div class="sess-sub">${s.subtitle}</div>
+        </div>
+        <div class="sess-duration">⏱ ${s.duration}</div>
+      </div>
+      <div class="warmup-box">
+        <span class="warmup-label" style="color:${c}">Échauffement · </span>${s.warmup}
+      </div>
+    </div>
+
+    <div class="legend">
+      ${Object.entries(TAG_STYLES).map(([tag, ts]) =>
+        `<span class="legend-tag" style="background:${ts.bg}; border:1px solid ${ts.border}; color:${ts.color}">${tag}</span>`
+      ).join("")}
+    </div>
+
+    ${exercisesHTML}
+
+    <div class="cardio-box" style="background:${c}0e; border-color:${c}25">
+      <div class="cardio-label" style="color:${c}">Cardio finisher</div>
+      <div class="cardio-text">${s.cardio}</div>
+    </div>
+
+    <div class="coach-note" style="border-left-color:${c}">
+      <div class="coach-note-label">Note coach</div>
+      <div class="coach-note-text">${s.coachNote}</div>
+    </div>
+  `;
+}
+
+function toggleEx(sessIdx, exIdx) {
+  const card = document.getElementById(`ex-${sessIdx}-${exIdx}`);
+  if (!card) return;
+  card.classList.toggle("open");
+}
+
+function switchSession(idx) {
+  const colors = ["#C8F45A", "#F45A8C", "#5AC8F4"];
+  [0,1,2].forEach(i => {
+    const btn = document.getElementById(`sbtn-${i}`);
+    if (i === idx) {
+      btn.style.borderColor = colors[i];
+      btn.style.background = `${colors[i]}14`;
+      btn.querySelector(".s-name").style.color = colors[i];
+    } else {
+      btn.style.borderColor = "var(--border)";
+      btn.style.background = "var(--bg2)";
+      btn.querySelector(".s-name").style.color = "#ccc";
+    }
+  });
+  currentSession = idx;
+  renderSession(idx);
+}
+
+function switchTab(tab, btn) {
+  document.querySelectorAll(".panel").forEach(p => p.classList.remove("active"));
+  document.querySelectorAll(".tab-btn").forEach(b => b.classList.remove("active"));
+  document.getElementById(`panel-${tab}`).classList.add("active");
+  btn.classList.add("active");
+}
+
+// Init
+renderSession(0);
 </script>
 
 </body>
